@@ -1,6 +1,6 @@
-{ stdenv, fetchFromGitHub, buildGoPackage }:
+{ stdenv, fetchFromGitHub, buildGoModule }:
 
-buildGoPackage rec {
+buildGoModule rec {
   pname = "gecko";
   version = "5.0.0";
 
@@ -11,5 +11,5 @@ buildGoPackage rec {
     sha256 = "0jdz3gprafyhkfzxvnp16ss9yahsxvcm58r11c3kiyc0cf9xhyzj";
   };
 
-  goPackagePath = "gecko";
+  vendorHash = null;
 }
