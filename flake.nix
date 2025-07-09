@@ -37,7 +37,7 @@
         let
           pkgs = import nixpkgs {
             inherit system;
-            overlays = [ self.overlay ];
+            overlays = [ self.overlays.ssbm-nix ];
           };
         in
         {
@@ -80,7 +80,7 @@
             };
           };
           config = {
-            nixpkgs.overlays = [ (mkIf cfg.overlay.enable self.overlay) ];
+            nixpkgs.overlays = [ (mkIf cfg.overlay.enable self.overlays.ssbm-nix) ];
             services.udev.extraRules = mkIf cfg.gcc.rules.enable cfg.gcc.rules.rules;
             boot.kernelModules = mkIf cfg.gcc.oc-kmod.enable [ "gcadapter_oc" ];
             boot.extraModulePackages = mkIf cfg.gcc.oc-kmod.enable [

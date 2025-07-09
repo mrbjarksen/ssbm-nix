@@ -8,7 +8,7 @@ buildGoPackage rec {
     owner = "JLaferri";
     repo = "gecko";
     rev = "v${version}";
-    sha256 = "1jqxcimpl58czvxi52jndrnzhhqmg0i4v5dp6amibg2wxwyy12w3";
+    sha256 = "0jdz3gprafyhkfzxvnp16ss9yahsxvcm58r11c3kiyc0cf9xhyzj";
   };
 
   goPackagePath = "gecko";

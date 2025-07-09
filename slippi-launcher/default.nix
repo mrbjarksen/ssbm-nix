@@ -12,18 +12,10 @@ stdenvNoCC.mkDerivation rec {
 
   src = appimageTools.wrapType2 rec {
     inherit pname version;
-
-    nativeBuildInputs = [ makeWrapper ];
-
     src = fetchurl {
       url = "https://github.com/project-slippi/slippi-launcher/releases/download/v${version}/Slippi-Launcher-${version}-x86_64.AppImage";
-      hash = "sha256-zYxSVbxERLtz5/9IS8PUft6ZQw6kQtSUp0/KmmA/bmM=";
+      hash = "sha256-OrWd0jVqe6CzNbVRNlm2alt2NZ8uBYeHiASaB74ouW4=";
     };
-
-    extraInstallCommands = ''
-      wrapProgram $out/bin/slippi-launcher-${version} \
-        --add-flags "\''${NIXOS_OZONE_WL:+\''${WAYLAND_DISPLAY:+--ozone-platform-hint=auto --enable-features=WaylandWindowDecorations}}"
-    '';
   };
 
   desktopItems = [
@@ -48,5 +40,12 @@ stdenvNoCC.mkDerivation rec {
     runHook postInstall
   '';
 
+  postInstall = ''
+    wrapProgram $out/bin/slippi-launcher-${version} \
+      --add-flags "\''${NIXOS_OZONE_WL:+\''${WAYLAND_DISPLAY:+--ozone-platform-hint=auto --enable-features=WaylandWindowDecorations}}"
+  '';
+
   nativeBuildInputs = [ copyDesktopItems ];
+
+  buildInputs = [ makeWrapper ];
 }
