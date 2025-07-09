@@ -2,7 +2,7 @@
 , mesa, pkg-config, cmake, bluez, ffmpeg, libao, libGLU
 , gtk2, gtk3, glib, gettext, xorg, readline, openal, libevdev, portaudio, libusb1
 , libpulseaudio, udev, gnumake, wxGTK30, gdk-pixbuf, soundtouch, miniupnpc
-, mbedtls, curl, lzo, sfml, enet, xdg-utils, hidapi, webkitgtk
+, mbedtls, curl, lzo, sfml, enet, xdg-utils, hidapi, webkitgtk_6_0
 , projectplus-sdcard, projectplus-config, tree }:
 stdenv.mkDerivation rec {
 
@@ -58,7 +58,6 @@ stdenv.mkDerivation rec {
 
   nativeBuildInputs = [ pkg-config cmake ];
   buildInputs = [
-    mesa.drivers
     mesa
     pkg-config
     bluez
@@ -94,7 +93,7 @@ stdenv.mkDerivation rec {
     enet
     xdg-utils
     hidapi
-    webkitgtk
+    webkitgtk_6_0
     projectplus-sdcard
     projectplus-config
     tree

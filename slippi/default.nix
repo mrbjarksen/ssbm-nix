@@ -38,7 +38,7 @@
 , enet
 , xdg-utils
 , hidapi
-, webkitgtk
+, webkitgtk_6_0
 , vulkan-loader
 , rustc
 , cargo
@@ -141,7 +141,6 @@ stdenv.mkDerivation rec {
   buildInputs = [
     vulkan-loader
     makeWrapper
-    mesa.drivers
     mesa
     pkg-config
     bluez
@@ -178,7 +177,7 @@ stdenv.mkDerivation rec {
     enet
     xdg-utils
     hidapi
-    webkitgtk
+    webkitgtk_6_0
     alsa-lib
   ];
 }

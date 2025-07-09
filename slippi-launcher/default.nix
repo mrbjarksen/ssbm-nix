@@ -8,10 +8,12 @@
 
 stdenvNoCC.mkDerivation rec {
   pname = "slippi-launcher";
-  version = "2.10.5";
+  version = "2.11.10";
 
   src = appimageTools.wrapType2 rec {
     inherit pname version;
+
+    nativeBuildInputs = [ makeWrapper ];
 
     src = fetchurl {
       url = "https://github.com/project-slippi/slippi-launcher/releases/download/v${version}/Slippi-Launcher-${version}-x86_64.AppImage";
@@ -19,7 +21,6 @@ stdenvNoCC.mkDerivation rec {
     };
 
     extraInstallCommands = ''
-      source "${makeWrapper}/nix-support/setup-hook"
       wrapProgram $out/bin/slippi-launcher-${version} \
         --add-flags "\''${NIXOS_OZONE_WL:+\''${WAYLAND_DISPLAY:+--ozone-platform-hint=auto --enable-features=WaylandWindowDecorations}}"
     '';

@@ -1,5 +1,4 @@
 {
-
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
     slippi-desktop.url = "github:project-slippi/slippi-desktop-app";
@@ -10,20 +9,17 @@
 
   outputs = { self, nixpkgs, nix, slippi-desktop, ... }@inputs:
     let
-
       supportedSystems = [ "x86_64-linux" ];
       forAllSystems = f: nixpkgs.lib.genAttrs supportedSystems (system: f system);
-
     in
     {
-
-      overlay = final: prev: import ./overlay.nix { inherit slippi-desktop final prev; };
+      overlays.ssbm-nix = final: prev: import ./overlay.nix { inherit slippi-desktop final prev; };
 
       apps = forAllSystems (system:
         let
           pkgs = import nixpkgs {
             inherit system;
-            overlays = [ self.overlay ];
+            overlays = [ self.overlays.ssbm-nix ];
           };
         in
         {
@@ -59,12 +55,11 @@
           /* dat-texture-wizard = pkgs.dat-texture-wizard; */
         });
 
-      nixosModule = { pkgs, config, ... }:
+      nixosModules.ssbm-nix = { pkgs, config, lib, ... }:
         let
           cfg = config.ssbm;
         in
-        with nixpkgs.lib; {
-
+        with lib; {
           options.ssbm = {
             overlay.enable = mkEnableOption "Activate the package overlay.";
             cache.enable = mkEnableOption "Turn on cache.";
@@ -98,11 +93,12 @@
             environment.systemPackages = [ (mkIf cfg.keyb0xx.enable (pkgs.keyb0xx.override { keyb0xxconfig = cfg.keyb0xx.config; })) ];
           };
         };
-      homeManagerModule = { pkgs, config, ... }:
+
+      homeModules.ssbm-nix = { pkgs, config, lib, ... }:
         let
           cfg = config.ssbm;
         in
-        with nixpkgs.lib; {
+        with lib; {
           options.ssbm = {
             slippi-launcher = {
               enable = mkEnableOption "Install Slippi Launcher";
