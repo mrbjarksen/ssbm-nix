@@ -40,12 +40,5 @@ stdenvNoCC.mkDerivation rec {
     runHook postInstall
   '';
 
-  postInstall = ''
-    wrapProgram $out/bin/slippi-launcher-${version} \
-      --add-flags "\''${NIXOS_OZONE_WL:+\''${WAYLAND_DISPLAY:+--ozone-platform-hint=auto --enable-features=WaylandWindowDecorations}}"
-  '';
-
   nativeBuildInputs = [ copyDesktopItems ];
-
-  buildInputs = [ makeWrapper ];
 }
